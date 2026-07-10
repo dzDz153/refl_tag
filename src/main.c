@@ -243,10 +243,10 @@ int main(void)
 			.max_procedure_count = 0,
 			.min_subevent_len = 10000,
 			.max_subevent_len = 75000,
-			.tone_antenna_config_selection = BT_LE_CS_TONE_ANTENNA_CONFIGURATION_A1_B1,
+			.tone_antenna_config_selection = BT_LE_CS_TONE_ANTENNA_CONFIGURATION_A2_B2,
 			.phy = BT_LE_CS_PROCEDURE_PHY_2M,
 			.tx_power_delta = 0x80,
-			.preferred_peer_antenna = BT_LE_CS_PROCEDURE_PREFERRED_PEER_ANTENNA_1,
+			.preferred_peer_antenna = BT_LE_CS_PROCEDURE_PREFERRED_PEER_ANTENNA_1 | BT_LE_CS_PROCEDURE_PREFERRED_PEER_ANTENNA_2,
 			.snr_control_initiator = BT_LE_CS_SNR_CONTROL_NOT_USED,
 			.snr_control_reflector = BT_LE_CS_SNR_CONTROL_NOT_USED,
 		};

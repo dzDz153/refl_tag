@@ -1,0 +1,72 @@
+/*
+ * Copyright (c) 2026 Nordic Semiconductor ASA
+ *
+ * SPDX-License-Identifier: LicenseRef-Nordic-5-Clause
+ */
+
+/delete-node/ &boot_partition;
+
+&cpuapp_rram {
+	partitions {
+		compatible = "fixed-partitions";
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		boot_partition: partition@0 {
+			label = "mcuboot";
+			reg = <0x00000000 0x0000f800>;
+		};
+	};
+};
+
+&nfct {
+	status = "disabled";
+};
+
+&uicr {
+	nfct-pins-as-gpios;
+};
+
+/ {
+	chosen {
+		zephyr,console = &uart20;
+		zephyr,shell-uart = &uart20;
+		zephyr,uart-mcumgr = &uart20;
+		zephyr,bt-mon-uart = &uart20;
+		zephyr,bt-c2h-uart = &uart20;
+	};
+};
+
+&uart20 {
+	status = "okay";
+	current-speed = <115200>;
+	pinctrl-0 = <&uart20_default>;
+	pinctrl-1 = <&uart20_sleep>;
+	pinctrl-names = "default", "sleep";
+};
+
+&pinctrl {
+	uart20_default: uart20_default {
+		group1 {
+			psels = <NRF_PSEL(UART_TX,1,2) NRF_PSEL(UART_RX,1,3)>;
+		};
+	};
+
+	uart20_sleep: uart20_sleep {
+		group1 {
+			psels = <NRF_PSEL(UART_TX,1,2) NRF_PSEL(UART_RX,1,3)>;
+			low-power-enable;
+		};
+	};
+};
+
+/ {
+	cs_antenna_switch: cs-antenna-config {
+		status = "okay";
+		compatible = "nordic,bt-cs-antenna-switch";
+		ant-gpios = <&gpio1 9 GPIO_ACTIVE_HIGH>,
+			    <&gpio1 10 GPIO_ACTIVE_HIGH>;
+		multiplexing-mode = <0>;
+	};
+};
+
